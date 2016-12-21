@@ -1,23 +1,26 @@
 #!/bin/bash
 
-# Script is used to build ansible host file for RHEL OSP 7 overcloud nodes
+# Script is used to build ansible host file for RH OSP overcloud nodes
 # this should be executed from undercloud node as stack user
 # copy output of this script to /etc/ansible/hosts
 
 source ~/stackrc
 
+nova=`openstack server list`
+unique=`echo "$nova" | grep ctlplane | awk {' print $4 '} | sed 's/^[^-]*-//g' | sed 's/-.*//g' | uniq`
+
 echo "[all:vars]"
 echo "ansible_ssh_user=heat-admin"
 
-for i in controller cephstorage compute
-	do
-		echo "" 
-		echo "[$i]"
-		count=`nova list | grep ctlplane | grep $i | awk {' print $12 '} | sed 's/ctlplane=//g'| wc -l`
-		for j in `eval echo {1..$count}`
-			do
-				ip=`nova list | grep ctlplane | grep $i | awk {' print $12 '} | sed 's/ctlplane=//g'| head -n $j | tail -n 1`
-				hostname=`nova list | grep ctlplane | grep $i | awk {' print $4 '} | head -n $j | tail -n 1`
-				echo "$hostname ansible_ssh_host=$ip" 
-			done
-	done
+for i in $unique
+        do
+                echo "" 
+                echo "[$i]"
+                count=`echo "$nova" | grep ctlplane | grep $i | awk {' print $12 '} | sed 's/ctlplane=//g'| wc -l`
+                for j in `eval echo {1..$count}`
+                        do
+                                ip=`echo "$nova" | grep ctlplane | grep $i | awk {' print $8 '} | sed 's/ctlplane=//g'| head -n $j | tail -n 1`
+                                hostname=`echo "$nova" | grep ctlplane | grep $i | awk {' print $4 '} | head -n $j | tail -n 1`
+                                echo "$hostname ansible_ssh_host=$ip" 
+                        done
+        done
