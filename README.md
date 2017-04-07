@@ -4,7 +4,7 @@ Script is used to build ansible host file for Red Hat OpenStack Platform overclo
 
 This script has been tested with OSP7-OSP10. It has been fixed to support composable roles.
 
-##Execution
+##Execution<br>
 git clone https://github.com/OOsemka/ansible-overcloud-inventory.git <br>
 cd ansible-overcloud-inventory<br>
 chmod +x ansible-build-inventory<br>
