@@ -12,4 +12,4 @@ chmod +x ansible-build-inventory<br>
 sudo cp hosts /etc/ansible<br>
 <br>
 <b>Test</b><br>
-ansible all -m ping
+ansible all -i hosts -m ping
