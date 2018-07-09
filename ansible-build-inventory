@@ -7,7 +7,7 @@
 source ~/stackrc
 
 nova=`openstack server list`
-unique=`echo "$nova" | grep ctlplane | awk {' print $4 '} | sed 's/^[^-]*-//g' | sed 's/-.*//g' | sort | uniq`
+unique=`echo "$nova" | grep ctlplane | awk {' print $4 '} | awk -F'-' '{print $(NF-1)}' | sort | uniq`
 
 echo "[all:vars]"
 echo "ansible_ssh_user=heat-admin"
