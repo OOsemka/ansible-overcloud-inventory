@@ -2,7 +2,7 @@
 
 Script is used to build ansible host file for Red Hat OpenStack Platform overcloud nodes. This should be executed from undercloud node as stack user. Copy the output of this script to /etc/ansible/hosts
 
-This script has been tested with OSP7-OSP13. It has been fixed to support composable roles.
+This script has been tested with OSP7-OSP16. It has been fixed to support composable roles.
 
 <b>Execution</b><br>
 git clone https://github.com/OOsemka/ansible-overcloud-inventory.git <br>
